@@ -5,7 +5,9 @@ import { Hero } from "../Game/Hero";
 class PixiApp {
   app: Application;
   hero: Hero;
-  constructor() {}
+  constructor() {
+    this.heroMove();
+  }
 
   createApp(width: number, height: number) {
     this.app = new Application<HTMLCanvasElement>({
@@ -23,6 +25,25 @@ class PixiApp {
     this.hero.addSprite(200, 200);
     this.hero.addTextures(asstes);
     this.app.stage.addChild(this.hero);
+  }
+  heroMove() {
+    // Assuming 'hero' is an instance of the Hero class
+    document.addEventListener("keydown", (event) => {
+      switch (event.key) {
+        case "ArrowUp":
+          this.hero.move("up");
+          break;
+        case "ArrowDown":
+          this.hero.move("down");
+          break;
+        case "ArrowLeft":
+          this.hero.move("left");
+          break;
+        case "ArrowRight":
+          this.hero.move("right");
+          break;
+      }
+    });
   }
 
   addBackground(width: number, height: number) {

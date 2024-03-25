@@ -5,7 +5,8 @@ export class Hero extends Container {
   private assets: Promise<Record<string, any>>;
   private textures: Texture[] = [];
   private currentFrameIndex: number = 0;
-  private animationInterval: number = 100; // Adjust as needed for animation speed
+  private animationInterval: number = 100;
+  private movementSpeed: number = 7;
 
   constructor() {
     super();
@@ -30,5 +31,21 @@ export class Hero extends Container {
         (this.currentFrameIndex + 1) % this.textures.length;
       this.hero.texture = this.textures[this.currentFrameIndex];
     }, this.animationInterval);
+  }
+  move(direction: "up" | "down" | "left" | "right") {
+    switch (direction) {
+      case "up":
+        this.hero.y -= this.movementSpeed;
+        break;
+      case "down":
+        this.hero.y += this.movementSpeed;
+        break;
+      case "left":
+        this.hero.x -= this.movementSpeed;
+        break;
+      case "right":
+        this.hero.x += this.movementSpeed;
+        break;
+    }
   }
 }
