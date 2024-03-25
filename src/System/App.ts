@@ -18,9 +18,10 @@ class PixiApp {
       height: height,
     });
   }
-  addHero() {
-    this.hero = new Hero(100);
+  addHero(asstes: Promise<Record<string, any>>) {
+    this.hero = new Hero();
     this.hero.addSprite(200, 200);
+    this.hero.addTextures(asstes);
     this.app.stage.addChild(this.hero);
   }
 
