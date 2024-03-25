@@ -1,8 +1,10 @@
 import { Application } from "pixi.js";
 import { Background } from "../Game/Background";
+import { Hero } from "../Game/Hero";
 
 class PixiApp {
   app: Application;
+  hero: Hero;
   constructor() {}
 
   createApp(width: number, height: number) {
@@ -12,8 +14,14 @@ class PixiApp {
       autoDensity: true,
       backgroundColor: 0x6495ed,
       width: width,
+      antialias: true,
       height: height,
     });
+  }
+  addHero() {
+    this.hero = new Hero(100);
+    this.hero.addSprite(200, 200);
+    this.app.stage.addChild(this.hero);
   }
 
   addBackground(width: number, height: number) {

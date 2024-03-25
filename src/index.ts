@@ -21,3 +21,4 @@ const screenHeight: number = 600;
 
 App.createApp(screenWidth, screenHeight);
 App.addBackground(screenWidth, screenHeight);
+App.addHero();
