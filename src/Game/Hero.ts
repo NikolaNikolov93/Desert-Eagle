@@ -1,4 +1,5 @@
 import { Container, Sprite, Texture } from "pixi.js";
+import { Bomb } from "./PlaneBomb";
 
 export class Hero extends Container {
   private hero: Sprite;
@@ -7,7 +8,6 @@ export class Hero extends Container {
   private currentFrameIndex: number = 0;
   private animationInterval: number = 100;
   private movementSpeed: number = 7;
-  private bomb: Sprite;
 
   constructor() {
     super();
@@ -51,11 +51,7 @@ export class Hero extends Container {
   }
   dropBomb() {
     // Implement bomb dropping logic here
-    this.bomb = Sprite.from("ammo/planeBomb.png");
-    this.bomb.anchor.set(1, 0.5);
-    this.bomb.position.set(this.hero.x - 50, this.hero.y + 70);
-    this.bomb.rotation = Math.PI / 2;
-    this.bomb.scale.set(0.6);
-    this.addChild(this.bomb);
+    const bomb = new Bomb(this.hero.x, this.hero.y); // Create a new bomb instance
+    this.parent.addChild(bomb); // Add the bomb to the game world
   }
 }
