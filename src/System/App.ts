@@ -6,7 +6,7 @@ class PixiApp {
   app: Application;
   hero: Hero;
   constructor() {
-    this.heroMove();
+    this.heroActions();
   }
 
   createApp(width: number, height: number) {
@@ -26,7 +26,7 @@ class PixiApp {
     this.hero.addTextures(asstes);
     this.app.stage.addChild(this.hero);
   }
-  heroMove() {
+  heroActions() {
     // Assuming 'hero' is an instance of the Hero class
     document.addEventListener("keydown", (event) => {
       switch (event.key) {
@@ -41,6 +41,9 @@ class PixiApp {
           break;
         case "ArrowRight":
           this.hero.move("right");
+          break;
+        case ` `:
+          this.hero.dropBomb();
           break;
       }
     });
