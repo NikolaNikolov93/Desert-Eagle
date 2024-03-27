@@ -1,7 +1,7 @@
 import { Assets } from "pixi.js";
 import { App } from "./System/App";
 
-const screenWidth: number = 1025;
+const screenWidth: number = 1024;
 const screenHeight: number = 600;
 const assets: Promise<Record<string, any>> = Assets.load([
   "/hero/planeRed1.png",
