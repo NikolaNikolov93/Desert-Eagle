@@ -35,7 +35,6 @@ export class Hero extends Container {
     switch (direction) {
       case "up":
         this.hero.y -= this.movementSpeed;
-
         break;
       case "down":
         this.hero.y += this.movementSpeed;

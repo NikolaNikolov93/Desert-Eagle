@@ -40,13 +40,14 @@ export class Enemy extends Container {
   }
   bulletUpdate() {
     // Move the enemy horizontally
-    this.bullet.x -= this.speed;
+    this.bullet.x -= this.speed + 2;
     this.bullet.y -= this.speed - 2;
 
     // Check if the enemy has moved outside the left edge of the screen
-    // if (this.bullet.x + this.enemy.width / 2 < 0) {
-    //   this.removeChild(this.enemy);
-    //   Ticker.shared.remove(this.update, this);
-    // }
+    if (this.bullet.x < -1000) {
+      this.removeChild(this.enemy);
+      Ticker.shared.remove(this.update, this);
+      Ticker.shared.remove(this.bulletUpdate, this);
+    }
   }
 }

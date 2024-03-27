@@ -1,10 +1,12 @@
-import { Container, Sprite, Ticker } from "pixi.js";
+import { Container, Sprite, Text, Ticker } from "pixi.js";
 
 export class Background extends Container {
   private readonly screenWidth: number;
   private readonly screenHeight: number;
   private background: Sprite;
   private backgrounds: Sprite[] = [];
+  private score: number = 0;
+  private scoreText: Text;
 
   constructor(screenWidth: number, screenHeight: number) {
     super();
@@ -16,6 +18,10 @@ export class Background extends Container {
       this.addSprite(i * this.screenWidth);
       this.startScrolling();
     }
+    this.scoreText = new Text(`Distance: ${this.score}`, { fill: 0x000000 });
+    this.scoreText.position.set(30, 30);
+
+    this.addChild(this.scoreText);
   }
   addSprite(width: number) {
     this.background = Sprite.from("background/bg.png");
@@ -38,6 +44,8 @@ export class Background extends Container {
       // If the background moves completely off-screen, reposition it to the right
       if (background.x + background.width < 0) {
         background.x += this.screenWidth * 3;
+        this.score += 100; // Example increment, you can update the score based on your game logic
+        this.scoreText.text = `Distance: ${this.score}`;
       }
     }
   }
