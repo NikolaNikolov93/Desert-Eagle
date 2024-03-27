@@ -3,6 +3,7 @@ import { Background } from "../Game/Background";
 import { Hero } from "../Game/Hero";
 import { Enemy } from "../Game/Enemy";
 import getRandomNumber from "../utils/getRandomNum";
+import { Terrain } from "../Game/Terrain";
 
 class PixiApp {
   app: Application;
@@ -56,7 +57,7 @@ class PixiApp {
   }
   addEnemy() {
     this.enemy = new Enemy();
-    this.enemy.addSprite(2200, 1050);
+    this.enemy.addSprite(2000, 1050);
     this.enemy.scale.set(0.5);
     this.app.stage.addChild(this.enemy);
     this.enemy.shoot();
@@ -79,6 +80,21 @@ class PixiApp {
     const background: Background = new Background(width, height);
 
     this.app.stage.addChild(background);
+  }
+  addTerrain() {
+    const terrain = new Terrain();
+    this.app.stage.addChild(terrain);
+  }
+  startTerrainSpawning() {
+    Ticker.shared.add((delta) => {
+      this.spawnInterval = getRandomNumber(300, 500); // generate different spawn interval for each enemy
+      this.spawnTimer += delta;
+
+      if (this.spawnTimer >= this.spawnInterval) {
+        this.addTerrain();
+        this.spawnTimer = 0;
+      }
+    });
   }
 }
 export const App = new PixiApp();

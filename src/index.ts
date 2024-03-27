@@ -15,3 +15,4 @@ assets.then((resolvedAssets) => {
   App.addHero(resolvedAssets);
 });
 App.startEnemySpawning();
+App.startTerrainSpawning();
