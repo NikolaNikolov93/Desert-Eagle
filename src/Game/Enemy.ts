@@ -44,7 +44,7 @@ export class Enemy extends Container {
     this.bullet.y -= this.speed - 2;
 
     // Check if the enemy has moved outside the left edge of the screen
-    if (this.bullet.x < -1000) {
+    if (this.bullet.x < -1000 || this.bullet.y < -1000) {
       this.removeChild(this.enemy);
       Ticker.shared.remove(this.update, this);
       Ticker.shared.remove(this.bulletUpdate, this);
