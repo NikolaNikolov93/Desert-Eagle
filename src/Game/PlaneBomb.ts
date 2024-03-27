@@ -8,8 +8,8 @@ export class Bomb extends Container {
   constructor(x: number, y: number) {
     super();
     this.createBomb(x, y);
-    this.startY = y; // Store the initial Y position
-    this.speed = 4; // Adjust as needed
+    this.startY = y;
+    this.speed = 4; // Adjust the speed as needed
     this.startDropping();
   }
 
@@ -28,7 +28,7 @@ export class Bomb extends Container {
     this.bomb.y += this.speed * delta;
     this.bomb.x -= delta;
 
-    if (this.bomb.y >= this.startY + 400) {
+    if (this.bomb.y >= this.startY + 800) {
       this.destroy();
     }
   }

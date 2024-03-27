@@ -3,7 +3,7 @@ import { Bomb } from "./PlaneBomb";
 
 export class Hero extends Container {
   private hero: Sprite;
-  private assets: Promise<Record<string, any>>;
+  private assets: Record<string, any>;
   private textures: Texture[] = [];
   private currentFrameIndex: number = 0;
   private animationInterval: number = 100;
@@ -13,11 +13,9 @@ export class Hero extends Container {
     super();
     this.startAnimation();
   }
-  addTextures(assets: Promise<Record<string, any>>) {
+  addTextures(assets: Record<string, any>) {
     this.assets = assets;
-    this.assets.then((resolvedAssets) => {
-      this.textures = Object.values(resolvedAssets);
-    });
+    this.textures = Object.values(this.assets);
   }
 
   addSprite(x: number, y: number) {
@@ -37,6 +35,7 @@ export class Hero extends Container {
     switch (direction) {
       case "up":
         this.hero.y -= this.movementSpeed;
+
         break;
       case "down":
         this.hero.y += this.movementSpeed;
@@ -50,8 +49,7 @@ export class Hero extends Container {
     }
   }
   dropBomb() {
-    // Implement bomb dropping logic here
-    const bomb = new Bomb(this.hero.x, this.hero.y); // Create a new bomb instance
-    this.parent.addChild(bomb); // Add the bomb to the game world
+    const bomb = new Bomb(this.hero.x, this.hero.y);
+    this.parent.addChild(bomb);
   }
 }

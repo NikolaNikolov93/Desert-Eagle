@@ -37,7 +37,7 @@ export class Background extends Container {
       background.x -= 1.5 * deltaTime; // Adjust the speed as needed
       // If the background moves completely off-screen, reposition it to the right
       if (background.x + background.width < 0) {
-        background.x += this.screenWidth * 3; // Reposition to the right
+        background.x += this.screenWidth * 3;
       }
     }
   }

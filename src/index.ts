@@ -3,7 +3,7 @@ import { App } from "./System/App";
 
 const screenWidth: number = 1025;
 const screenHeight: number = 600;
-const asstes: Promise<Record<string, any>> = Assets.load([
+const assets: Promise<Record<string, any>> = Assets.load([
   "/hero/planeRed1.png",
   "/hero/planeRed2.png",
   "/hero/planeRed3.png",
@@ -11,4 +11,7 @@ const asstes: Promise<Record<string, any>> = Assets.load([
 
 App.createApp(screenWidth, screenHeight);
 App.addBackground(screenWidth, screenHeight);
-App.addHero(asstes);
+assets.then((resolvedAssets) => {
+  App.addHero(resolvedAssets);
+});
+App.startEnemySpawning();

@@ -1,12 +1,19 @@
-import { Application } from "pixi.js";
+import { Application, Ticker } from "pixi.js";
 import { Background } from "../Game/Background";
 import { Hero } from "../Game/Hero";
+import { Enemy } from "../Game/Enemy";
+import getRandomNumber from "../utils/getRandomNum";
 
 class PixiApp {
   app: Application;
   hero: Hero;
+  enemy: Enemy;
+  spawnInterval: number; // Interval between enemy spawns
+  spawnTimer: number; // Timer to track elapsed time for spawning
   constructor() {
     this.heroActions();
+    this.spawnInterval;
+    this.spawnTimer = 0;
   }
 
   createApp(width: number, height: number) {
@@ -20,14 +27,13 @@ class PixiApp {
       height: height,
     });
   }
-  addHero(asstes: Promise<Record<string, any>>) {
+  addHero(asstes: Record<string, any>) {
     this.hero = new Hero();
     this.hero.addSprite(200, 200);
     this.hero.addTextures(asstes);
     this.app.stage.addChild(this.hero);
   }
   heroActions() {
-    // Assuming 'hero' is an instance of the Hero class
     document.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "ArrowUp":
@@ -45,6 +51,26 @@ class PixiApp {
         case ` `:
           this.hero.dropBomb();
           break;
+      }
+    });
+  }
+  addEnemy() {
+    this.enemy = new Enemy();
+    this.enemy.addSprite(2200, 1050);
+    this.enemy.scale.set(0.5);
+    this.app.stage.addChild(this.enemy);
+    this.enemy.shoot();
+    this.enemy.bulletUpdate();
+    this.enemy.update();
+  }
+  startEnemySpawning() {
+    Ticker.shared.add((delta) => {
+      this.spawnInterval = getRandomNumber(300, 500); // generate different spawn interval for each enemy
+      this.spawnTimer += delta;
+
+      if (this.spawnTimer >= this.spawnInterval) {
+        this.addEnemy();
+        this.spawnTimer = 0;
       }
     });
   }
