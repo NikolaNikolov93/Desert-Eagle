@@ -10,7 +10,7 @@ const assets: Promise<Record<string, any>> = Assets.load([
 ]);
 
 // Create start game scene
-class StartGameScene {
+export class StartGameScene {
   private container: HTMLElement | null;
   private playButton: HTMLElement | null;
 
