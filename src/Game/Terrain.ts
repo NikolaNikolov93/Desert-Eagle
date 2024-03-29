@@ -26,7 +26,7 @@ export class Terrain extends Container {
     this.terrain.x -= this.speed;
 
     // Check if the terrain has moved outside the left edge of the screen
-    if (this.terrain.x + this.terrain.width / 2 < 0) {
+    if (this.terrain.x + this.terrain.width < 0) {
       this.removeChild(this.terrain);
       Ticker.shared.remove(this.update, this);
     }
