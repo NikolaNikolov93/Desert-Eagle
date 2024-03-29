@@ -27,6 +27,7 @@ class PixiApp {
       antialias: true,
       height: height,
     });
+    localStorage.setItem("gameScore", "0");
   }
   addHero(asstes: Record<string, any>) {
     this.hero = new Hero();
@@ -61,7 +62,7 @@ class PixiApp {
     this.enemy.scale.set(0.5);
     this.app.stage.addChild(this.enemy);
     this.enemy.shoot();
-    this.enemy.bulletUpdate();
+    // this.enemy.bulletUpdate();
     this.enemy.update();
   }
   startEnemySpawning() {
