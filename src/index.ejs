@@ -58,13 +58,17 @@
         bottom: 0;
         right: 33%;
       }
-      .play-game-button {
+      #play-game-button {
         margin: 2rem 0rem;
         width: 30%;
         font-size: 2rem;
         padding: 1rem 0rem;
         border-radius: 10px;
         font-family: "Play", sans-serif;
+        transition: transform 0.1s ease;
+      }
+      #play-game-button:active {
+        transform: scale(0.95);
       }
       .menu p {
         padding: 2rem;
@@ -77,7 +81,7 @@
       <div class="menu">
         <h1>Desert Eagle</h1>
         <div class="button-wrapper">
-          <button class="play-game-button">Play Game</button>
+          <button id="play-game-button">Play Game</button>
           <img src="/startGameScene/tap.png" alt="" />
         </div>
         <p>Use arrows to navigate and Space Bar to shoot!</p>
