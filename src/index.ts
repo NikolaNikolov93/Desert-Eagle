@@ -1,4 +1,4 @@
-import { Assets, Container, Text } from "pixi.js";
+import { Assets, Container } from "pixi.js";
 import { App } from "./System/App";
 
 const screenWidth: number = 1024;
@@ -37,7 +37,6 @@ export class EndGameScene extends Container {
   private endGameContainer: HTMLElement;
   private playAgainButton: HTMLElement;
   private pixiApp: HTMLElement;
-  private scoreText: Text;
   private scoreKey: string = "gameScore";
   private score: number;
 
@@ -47,11 +46,6 @@ export class EndGameScene extends Container {
     this.endGameContainer = document.getElementById("end-game-container")!;
     this.pixiApp = document.getElementById("pixi-content")!;
     this.playAgainButton = document.getElementById("play-again-button")!;
-    this.scoreText = new Text(`Score: ${this.score}`, {
-      fill: 0xffffff,
-    });
-    this.scoreText.position.set(250, 50);
-    this.addChild(this.scoreText);
     this.addScore();
 
     // Add event listener to play again button
@@ -61,7 +55,14 @@ export class EndGameScene extends Container {
   }
   addScore() {
     this.score = parseInt(localStorage.getItem(this.scoreKey) || "0");
-    this.scoreText.text = `Score ${this.score}`;
+    const scoreElement = document.createElement("div");
+    const isCreated = document.getElementById("score");
+    scoreElement.setAttribute("id", "score");
+    scoreElement.textContent = `Score: ${this.score}`;
+    if (isCreated) {
+      return;
+    }
+    this.endGameContainer.appendChild(scoreElement);
   }
   destroyApp() {
     App.removeApp();
