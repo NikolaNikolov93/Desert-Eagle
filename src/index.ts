@@ -38,9 +38,8 @@ export class EndGameScene {
 
   constructor() {
     // Initialize elements
-    this.container = document.getElementById("end-game-scene");
+    this.container = document.getElementById("end-game-container");
     this.playAgainButton = document.getElementById("play-again-button");
-
     // Add event listener to play again button
     if (this.playAgainButton) {
       this.playAgainButton.addEventListener("click", this.playAgain.bind(this));

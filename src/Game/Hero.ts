@@ -110,10 +110,9 @@ export class Hero extends Container {
     });
   }
   endGame() {
-    console.log(`GOT HIT BY TERRAIN`);
     const endGame = new EndGameScene();
+    endGame.displayEndGameScreen();
     endGame.destroyApp();
-    endGame.playAgain();
   }
   checkForBulletHit() {
     const app = App.app;
