@@ -62,7 +62,6 @@ export class EndGameScene extends Container {
   addScore() {
     this.score = parseInt(localStorage.getItem(this.scoreKey) || "0");
     this.scoreText.text = `Score ${this.score}`;
-    console.log(this.children);
   }
   destroyApp() {
     App.removeApp();

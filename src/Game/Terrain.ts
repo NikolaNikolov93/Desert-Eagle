@@ -7,13 +7,12 @@ export class Terrain extends Container {
 
   constructor() {
     super();
-    this.speed = 5; // Adjust the speed as needed
+    this.speed = 5;
     this.addTerrain();
     Ticker.shared.add(this.update, this);
   }
 
   addTerrain() {
-    // Replace "terrain.png" with the path to your terrain texture
     this.terrain = Sprite.from("terrain/rockDown.png");
     const scale: number = getRandomNumber(0.8, 1.5);
     // Adjust the position and scale of the terrain sprite as needed

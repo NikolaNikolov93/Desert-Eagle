@@ -51,13 +51,14 @@ export class EnemyBullet extends Container {
     const stageChildren = app.stage.children;
     stageChildren.forEach((child) => {
       if (child instanceof Hero) {
-        const heroHitbox = child.getBounds();
+        const heroHitbox = child.getHeroHitbox();
+
         const enemyBulletHitbox = this.getBounds();
 
         if (
-          heroHitbox.x + heroHitbox.width > enemyBulletHitbox.x &&
+          heroHitbox.x + heroHitbox.width / 2 > enemyBulletHitbox.x &&
           heroHitbox.x < enemyBulletHitbox.x + enemyBulletHitbox.width &&
-          heroHitbox.y + heroHitbox.height > enemyBulletHitbox.y &&
+          heroHitbox.y + heroHitbox.height / 2 > enemyBulletHitbox.y &&
           heroHitbox.y < enemyBulletHitbox.y + enemyBulletHitbox.height
         ) {
           this.endGame();
@@ -71,3 +72,13 @@ export class EnemyBullet extends Container {
     endGame.displayEndGameScreen();
   }
 }
+// console.log(`HeroX: ${heroHitbox.x}`);
+// console.log(`HeroY: ${heroHitbox.y}`);
+// console.log(`HeroWidt: ${heroHitbox.width}`);
+// console.log(`HeroHeight: ${heroHitbox.height}`);
+// console.log(`-------------`);
+
+// console.log(`BylletX: ${heroHitbox.x}`);
+// console.log(`BylletY: ${heroHitbox.y}`);
+// console.log(`BylletWidth: ${heroHitbox.width}`);
+// console.log(`BylletHeight: ${heroHitbox.height}`);

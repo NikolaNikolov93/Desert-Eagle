@@ -14,17 +14,22 @@ export class Hero extends Container {
   private movementSpeed: number = 7;
 
   private bobmHitbox: Rectangle; // Custom hitbox for collision detection
+  private heroHitbox: Rectangle; // Custom hitbox for collision detection
 
   constructor() {
     super();
     this.startAnimation();
     this.bombSpeed = 4;
     this.bobmHitbox = new Rectangle(0, 0, 45, 35); // Customize hitbox size as needed
+    this.heroHitbox = new Rectangle(0, 0, 88, 73); // Customize hitbox size as needed
     Ticker.shared.add(this.checkForTerrainHit, this);
     Ticker.shared.add(this.updateBombPosition, this);
   }
   getBombHitbox() {
     return this.bobmHitbox;
+  }
+  getHeroHitbox() {
+    return this.heroHitbox;
   }
   addTextures(assets: Record<string, any>) {
     this.assets = assets;
@@ -48,15 +53,23 @@ export class Hero extends Container {
     switch (direction) {
       case "up":
         this.hero.y -= this.movementSpeed;
+        this.heroHitbox.y = this.hero.y;
+
         break;
       case "down":
         this.hero.y += this.movementSpeed;
+        this.heroHitbox.y = this.hero.y;
+
         break;
       case "left":
         this.hero.x -= this.movementSpeed;
+        this.heroHitbox.x = this.hero.x;
+
         break;
       case "right":
         this.hero.x += this.movementSpeed;
+        this.heroHitbox.x = this.hero.x;
+
         break;
     }
   }
@@ -93,14 +106,14 @@ export class Hero extends Container {
     const stageChildren = app.stage.children;
     stageChildren.forEach((child) => {
       if (child instanceof Terrain) {
-        const enemyBulletHitbox = child.getBounds();
+        const terrainHitbox = child.getBounds();
         const heroHitbox = this.hero.getBounds();
 
         if (
-          enemyBulletHitbox.x + enemyBulletHitbox.width / 2 > heroHitbox.x &&
-          enemyBulletHitbox.x < heroHitbox.x + heroHitbox.width / 2 &&
-          enemyBulletHitbox.y + enemyBulletHitbox.height > heroHitbox.y &&
-          enemyBulletHitbox.y < heroHitbox.y + heroHitbox.height
+          terrainHitbox.x + terrainHitbox.width / 2 > heroHitbox.x &&
+          terrainHitbox.x < heroHitbox.x + heroHitbox.width / 2 &&
+          terrainHitbox.y + terrainHitbox.height > heroHitbox.y &&
+          terrainHitbox.y < heroHitbox.y + heroHitbox.height
         ) {
           this.endGame();
         }
