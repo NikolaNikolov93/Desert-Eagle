@@ -32,7 +32,40 @@ export class StartGameScene {
     startMainGame();
   }
 }
+export class EndGameScene {
+  private container: HTMLElement | null;
+  private playAgainButton: HTMLElement | null;
 
+  constructor() {
+    // Initialize elements
+    this.container = document.getElementById("end-game-scene");
+    this.playAgainButton = document.getElementById("play-again-button");
+
+    // Add event listener to play again button
+    if (this.playAgainButton) {
+      this.playAgainButton.addEventListener("click", this.playAgain.bind(this));
+    }
+  }
+  destroyApp() {
+    App.removeApp();
+  }
+  playAgain() {
+    // Hide end game scene
+    if (this.container) {
+      this.container.style.display = "none";
+    }
+
+    // Start a new game
+    startMainGame();
+  }
+
+  displayEndGameScreen() {
+    // Show end game scene
+    if (this.container) {
+      this.container.style.display = "block";
+    }
+  }
+}
 // Function to start the main game
 function startMainGame() {
   App.createApp(screenWidth, screenHeight);

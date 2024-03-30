@@ -2,6 +2,7 @@ import { Container, Rectangle, Sprite, Texture, Ticker } from "pixi.js";
 import { App } from "../System/App";
 import { Terrain } from "./Terrain";
 import { EnemyBullet } from "./EnemyBullet";
+import { EndGameScene } from "..";
 
 export class Hero extends Container {
   private hero: Sprite;
@@ -110,6 +111,9 @@ export class Hero extends Container {
   }
   endGame() {
     console.log(`GOT HIT BY TERRAIN`);
+    const endGame = new EndGameScene();
+    endGame.destroyApp();
+    endGame.playAgain();
   }
   checkForBulletHit() {
     const app = App.app;

@@ -29,6 +29,11 @@ class PixiApp {
     });
     localStorage.setItem("gameScore", "0");
   }
+  removeApp() {
+    this.app.stop();
+    this.app.stage.removeChildren();
+    this.app.destroy(true);
+  }
   addHero(asstes: Record<string, any>) {
     this.hero = new Hero();
     this.hero.addSprite(200, 200);
