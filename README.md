@@ -17,7 +17,6 @@ _Webpack_<br>
 
 _1.Add animation on plane elevation_<br>
 _2.Add amimation on explosions_<br>
-_3.Score to be visible on End Screen_<br>
 
 ## Things to fix!
 
@@ -27,3 +26,4 @@ _2.Enemy bullets to aim at Hero_<br>
 ## Fixed!
 
 _1.Collision detection_<br>
+_2.Score to be visible on End Screen_<br>
