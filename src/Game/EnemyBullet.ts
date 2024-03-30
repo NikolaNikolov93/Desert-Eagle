@@ -1,4 +1,7 @@
 import { Container, Rectangle, Sprite, Ticker } from "pixi.js";
+import { App } from "../System/App";
+import { Hero } from "./Hero";
+import { EndGameScene } from "..";
 
 export class EnemyBullet extends Container {
   private bullet: Sprite;
@@ -14,6 +17,7 @@ export class EnemyBullet extends Container {
     this.speed = 4; // Adjust the speed as needed
     this.createBullet(this.startX, this.startY);
     this.startShooting();
+    Ticker.shared.add(this.checkForBulletHit, this);
   }
   getBulletHitbox() {
     return this.bulletHitbox;
@@ -41,5 +45,29 @@ export class EnemyBullet extends Container {
     if (this.bullet.y >= this.startY + 800) {
       this.destroy();
     }
+  }
+  checkForBulletHit() {
+    const app = App.app;
+    const stageChildren = app.stage.children;
+    stageChildren.forEach((child) => {
+      if (child instanceof Hero) {
+        const heroHitbox = child.getBounds();
+        const enemyBulletHitbox = this.getBounds();
+
+        if (
+          heroHitbox.x + heroHitbox.width > enemyBulletHitbox.x &&
+          heroHitbox.x < enemyBulletHitbox.x + enemyBulletHitbox.width &&
+          heroHitbox.y + heroHitbox.height > enemyBulletHitbox.y &&
+          heroHitbox.y < enemyBulletHitbox.y + enemyBulletHitbox.height
+        ) {
+          this.endGame();
+        }
+      }
+    });
+  }
+  endGame() {
+    const endGame = new EndGameScene();
+    endGame.destroyApp();
+    endGame.displayEndGameScreen();
   }
 }

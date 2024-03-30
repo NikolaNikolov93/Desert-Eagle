@@ -1,4 +1,4 @@
-import { Assets } from "pixi.js";
+import { Assets, Container, Text } from "pixi.js";
 import { App } from "./System/App";
 
 const screenWidth: number = 1024;
@@ -11,11 +11,12 @@ const assets: Promise<Record<string, any>> = Assets.load([
 
 // Create start game scene
 export class StartGameScene {
-  private container: HTMLElement | null;
+  private startGameendGameContainer: HTMLElement | null;
   private playButton: HTMLElement | null;
 
   constructor() {
-    this.container = document.getElementById("start-game-scene");
+    this.startGameendGameContainer =
+      document.getElementById("start-game-scene");
     this.playButton = document.getElementById("play-game-button");
     if (this.playButton) {
       this.playButton.addEventListener("click", this.startGame.bind(this));
@@ -24,44 +25,64 @@ export class StartGameScene {
 
   startGame() {
     // Hide start game scene
-    if (this.container) {
-      this.container.style.display = "none";
+    if (this.startGameendGameContainer) {
+      this.startGameendGameContainer.style.display = "none";
     }
 
     // Start the main game
     startMainGame();
   }
 }
-export class EndGameScene {
-  private container: HTMLElement | null;
-  private playAgainButton: HTMLElement | null;
+export class EndGameScene extends Container {
+  private endGameContainer: HTMLElement;
+  private playAgainButton: HTMLElement;
+  private pixiApp: HTMLElement;
+  private scoreText: Text;
+  private scoreKey: string = "gameScore";
+  private score: number;
 
   constructor() {
+    super();
     // Initialize elements
-    this.container = document.getElementById("end-game-container");
-    this.playAgainButton = document.getElementById("play-again-button");
+    this.endGameContainer = document.getElementById("end-game-container")!;
+    this.pixiApp = document.getElementById("pixi-content")!;
+    this.playAgainButton = document.getElementById("play-again-button")!;
+    this.scoreText = new Text(`Score: ${this.score}`, {
+      fill: 0xffffff,
+    });
+    this.scoreText.position.set(250, 50);
+    this.addChild(this.scoreText);
+    this.addScore();
+
     // Add event listener to play again button
     if (this.playAgainButton) {
       this.playAgainButton.addEventListener("click", this.playAgain.bind(this));
     }
+  }
+  addScore() {
+    this.score = parseInt(localStorage.getItem(this.scoreKey) || "0");
+    this.scoreText.text = `Score ${this.score}`;
+    console.log(this.children);
   }
   destroyApp() {
     App.removeApp();
   }
   playAgain() {
     // Hide end game scene
-    if (this.container) {
-      this.container.style.display = "none";
+    if (this.endGameContainer) {
+      this.endGameContainer.style.display = "none";
+      this.pixiApp.style.display = "block";
     }
 
     // Start a new game
-    startMainGame();
+    window.location.reload();
   }
 
   displayEndGameScreen() {
     // Show end game scene
-    if (this.container) {
-      this.container.style.display = "block";
+    if (this.endGameContainer) {
+      this.endGameContainer.style.display = "block";
+      this.pixiApp.style.display = "none";
     }
   }
 }

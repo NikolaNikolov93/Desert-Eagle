@@ -1,7 +1,6 @@
 import { Container, Rectangle, Sprite, Texture, Ticker } from "pixi.js";
 import { App } from "../System/App";
 import { Terrain } from "./Terrain";
-import { EnemyBullet } from "./EnemyBullet";
 import { EndGameScene } from "..";
 
 export class Hero extends Container {
@@ -22,7 +21,6 @@ export class Hero extends Container {
     this.bombSpeed = 4;
     this.bobmHitbox = new Rectangle(0, 0, 45, 35); // Customize hitbox size as needed
     Ticker.shared.add(this.checkForTerrainHit, this);
-    Ticker.shared.add(this.checkForBulletHit, this);
     Ticker.shared.add(this.updateBombPosition, this);
   }
   getBombHitbox() {
@@ -111,29 +109,8 @@ export class Hero extends Container {
   }
   endGame() {
     const endGame = new EndGameScene();
-    endGame.displayEndGameScreen();
     endGame.destroyApp();
-  }
-  checkForBulletHit() {
-    const app = App.app;
-    const stageChildren = app.stage.children;
-    stageChildren.forEach((child) => {
-      if (child instanceof EnemyBullet) {
-        const enemyBulletHitbox = child.getBulletHitbox();
-        const heroHitbox = this.hero.getBounds();
-        console.log(child.getBounds().x);
-        console.log(heroHitbox.x);
-
-        if (
-          enemyBulletHitbox.x + enemyBulletHitbox.width / 2 > heroHitbox.x &&
-          enemyBulletHitbox.x < heroHitbox.x + heroHitbox.width / 2 &&
-          enemyBulletHitbox.y + enemyBulletHitbox.height > heroHitbox.y &&
-          enemyBulletHitbox.y < heroHitbox.y + heroHitbox.height
-        ) {
-          this.endGame();
-        }
-      }
-    });
+    endGame.displayEndGameScreen();
   }
 
   // checkForBombHit() {

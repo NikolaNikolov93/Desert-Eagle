@@ -36,6 +36,7 @@
       }
 
       #start-game-scene {
+        padding-top: 2rem;
         background-color: black;
         color: white;
         display: flex;
@@ -74,28 +75,35 @@
         padding: 2rem;
       }
       .end-game-container {
-        display: none;
+        font-size: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid white;
         text-align: center;
-        background-color: #ffffff;
+        background-color: #000000;
+        color: white;
         padding: 20px;
-        border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        height: 100vh;
+        font-family: "Press Start 2P", system-ui;
       }
       h1 {
         margin-top: 0;
       }
-      #play-again-button {
-        padding: 10px 20px;
-        font-size: 16px;
+      .play-again-button {
+        width: 30%;
+        padding: 12px 20px;
+        font-size: 2rem;
         border: none;
-        background-color: #007bff;
-        color: #ffffff;
+        color: black;
         cursor: pointer;
         border-radius: 5px;
-        transition: background-color 0.3s ease;
+        font-family: "Play", sans-serif;
+
+        transition: transform 0.1s ease;
       }
-      @play-again-button: hover {
-        background-color: #0056b3;
+      .play-again-button:active {
+        transform: scale(0.95);
       }
     </style>
   </head>
@@ -112,10 +120,11 @@
         <p>Avoid the enemies and be careful of the terrain!</p>
       </div>
     </div>
-    <div class="end-game-container">
+    <div id="end-game-container" class="end-game-container">
       <h1>Game Over</h1>
-      <p>Your score: <span id="score">0</span></p>
-      <button id="play-again-button">Play Again</button>
+      <button id="play-again-button" class="play-again-button">
+        Play Again
+      </button>
     </div>
     <noscript
       >Please enable JavaScript in your web browser to view this page.</noscript

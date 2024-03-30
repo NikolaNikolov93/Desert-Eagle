@@ -32,7 +32,6 @@ class PixiApp {
   removeApp() {
     this.app.stop();
     this.app.stage.removeChildren();
-    this.app.destroy();
   }
   addHero(asstes: Record<string, any>) {
     this.hero = new Hero();
