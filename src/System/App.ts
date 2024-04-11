@@ -4,6 +4,9 @@ import { Hero } from "../Game/Hero";
 import { Enemy } from "../Game/Enemy";
 import getRandomNumber from "../utils/getRandomNum";
 import { Terrain } from "../Game/Terrain";
+interface MyObject {
+  [key: string]: boolean;
+}
 
 class PixiApp {
   app: Application;
@@ -11,11 +14,40 @@ class PixiApp {
   enemy: Enemy;
   spawnInterval: number; // Interval between enemy spawns
   spawnTimer: number; // Timer to track elapsed time for spawning
+  keys: MyObject;
   constructor() {
-    this.heroActions();
+    // this.heroActions();
     this.spawnInterval;
     this.spawnTimer = 0;
+    this.keys = {};
+    document.addEventListener("keydown", this.keysDown);
+    document.addEventListener("keyup", this.keysUp);
+    Ticker.shared.add(this.movementLoop);
   }
+
+  keysDown = (e: KeyboardEvent) => {
+    this.keys[e.key] = true;
+    console.log(this.keys[e.key]);
+    console.log(e.key);
+  };
+  keysUp = (e: KeyboardEvent) => {
+    this.keys[e.key] = false;
+    console.log(this.keys[e.key]);
+  };
+  movementLoop = () => {
+    if (this.keys["ArrowUp"]) {
+      this.hero.move("up");
+    }
+    if (this.keys["ArrowDown"]) {
+      this.hero.move("down");
+    }
+    if (this.keys["ArrowLeft"]) {
+      this.hero.move("left");
+    }
+    if (this.keys["ArrowRight"]) {
+      this.hero.move("right");
+    }
+  };
 
   createApp(width: number, height: number) {
     this.app = new Application<HTMLCanvasElement>({
@@ -39,27 +71,27 @@ class PixiApp {
     this.hero.addTextures(asstes);
     this.app.stage.addChild(this.hero);
   }
-  heroActions() {
-    document.addEventListener("keydown", (event) => {
-      switch (event.key) {
-        case "ArrowUp":
-          this.hero.move("up");
-          break;
-        case "ArrowDown":
-          this.hero.move("down");
-          break;
-        case "ArrowLeft":
-          this.hero.move("left");
-          break;
-        case "ArrowRight":
-          this.hero.move("right");
-          break;
-        case ` `:
-          this.hero.dropBomb();
-          break;
-      }
-    });
-  }
+  // heroActions() {
+  //   document.addEventListener("keydown", (event) => {
+  //     switch (event.key) {
+  //       case "ArrowUp":
+  //         this.hero.move("up");
+  //         break;
+  //       case "ArrowDown":
+  //         this.hero.move("down");
+  //         break;
+  //       case "ArrowLeft":
+  //         this.hero.move("left");
+  //         break;
+  //       case "ArrowRight":
+  //         this.hero.move("right");
+  //         break;
+  //       case ` `:
+  //         this.hero.dropBomb();
+  //         break;
+  //     }
+  //   });
+  // }
   addEnemy() {
     this.enemy = new Enemy();
     this.enemy.addSprite(2000, 1050);
