@@ -27,12 +27,9 @@ class PixiApp {
 
   keysDown = (e: KeyboardEvent) => {
     this.keys[e.key] = true;
-    console.log(this.keys[e.key]);
-    console.log(e.key);
   };
   keysUp = (e: KeyboardEvent) => {
     this.keys[e.key] = false;
-    console.log(this.keys[e.key]);
   };
   movementLoop = () => {
     if (this.keys["ArrowUp"]) {

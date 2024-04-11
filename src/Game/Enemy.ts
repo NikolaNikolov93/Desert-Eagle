@@ -69,8 +69,8 @@ export class Enemy extends Container {
         const enemyHitbox = this.enemy.getBounds();
         if (
           bombHitbox.x + bombHitbox.width > enemyHitbox.x &&
-          bombHitbox.x < enemyHitbox.x + enemyHitbox.width &&
-          bombHitbox.y + bombHitbox.height / 5 > enemyHitbox.y &&
+          bombHitbox.x < enemyHitbox.x + enemyHitbox.width - 50 &&
+          bombHitbox.y + bombHitbox.height - 45 > enemyHitbox.y &&
           bombHitbox.y < enemyHitbox.y + enemyHitbox.height / 5
         ) {
           this.enemyDestroy();
