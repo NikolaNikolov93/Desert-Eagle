@@ -47,6 +47,9 @@ class PixiApp {
     if (this.keys["ArrowRight"]) {
       this.hero.move("right");
     }
+    if (this.keys[" "]) {
+      this.hero.dropBomb();
+    }
   };
 
   createApp(width: number, height: number) {

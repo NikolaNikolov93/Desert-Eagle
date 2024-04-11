@@ -68,12 +68,13 @@ export class Enemy extends Container {
         const bombHitbox = child.getBombHitbox();
         const enemyHitbox = this.enemy.getBounds();
         if (
-          bombHitbox.x + bombHitbox.width / 2 > enemyHitbox.x &&
-          bombHitbox.x < enemyHitbox.x + enemyHitbox.width / 2 &&
-          bombHitbox.y + bombHitbox.height / 2 > enemyHitbox.y &&
-          bombHitbox.y < enemyHitbox.y + enemyHitbox.height / 2
+          bombHitbox.x + bombHitbox.width > enemyHitbox.x &&
+          bombHitbox.x < enemyHitbox.x + enemyHitbox.width &&
+          bombHitbox.y + bombHitbox.height / 5 > enemyHitbox.y &&
+          bombHitbox.y < enemyHitbox.y + enemyHitbox.height / 5
         ) {
           this.enemyDestroy();
+          child.removeBomb();
         }
       }
     });
