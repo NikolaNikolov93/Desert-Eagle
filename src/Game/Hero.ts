@@ -11,7 +11,7 @@ export class Hero extends Container {
   private textures: Texture[] = [];
   private currentFrameIndex: number = 0;
   private animationInterval: number = 100;
-  private movementSpeed: number = 7;
+  private movementSpeed: number = 4;
 
   private bobmHitbox: Rectangle; // Custom hitbox for collision detection
   private heroHitbox: Rectangle; // Custom hitbox for collision detection
@@ -86,6 +86,9 @@ export class Hero extends Container {
     this.bomb.scale.set(0.6);
     this.addChild(this.bomb);
   }
+  removeBomb = () => {
+    this.removeChild(this.bomb);
+  };
 
   updateBombPosition(delta: number) {
     if (this.bomb) {
