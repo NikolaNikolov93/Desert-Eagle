@@ -6,11 +6,12 @@ import { EndGameScene } from "..";
 export class Hero extends Container {
   private hero: Sprite;
   private bomb: Sprite;
+  private smoke: Sprite;
   private bombSpeed: number;
   private assets: Record<string, any>;
   private textures: Texture[] = [];
   private currentFrameIndex: number = 0;
-  private animationInterval: number = 100;
+  private animationInterval: number = 80;
   private movementSpeed: number = 4;
 
   private bobmHitbox: Rectangle; // Custom hitbox for collision detection
@@ -24,12 +25,28 @@ export class Hero extends Container {
     this.heroHitbox = new Rectangle(0, 0, 88, 73); // Customize hitbox size as needed
     Ticker.shared.add(this.checkForTerrainHit, this);
     Ticker.shared.add(this.updateBombPosition, this);
+    Ticker.shared.add(this.updateSmoke, this);
   }
   getBombHitbox() {
     return this.bobmHitbox;
   }
   getHeroHitbox() {
     return this.heroHitbox;
+  }
+  addSmoke(x: number, y: number) {
+    this.smoke = Sprite.from("hero/puffSmall.png");
+    this.smoke.anchor.set(1, 0.5);
+    this.smoke.position.set(x, y);
+    this.addChild(this.smoke);
+  }
+  updateSmoke() {
+    let heroPosition = this.getHeroPosition();
+    this.smoke.x = heroPosition.heroX - 75;
+    this.smoke.y = heroPosition.heroY + 10;
+    console.log(this.smoke.x);
+  }
+  getHeroPosition() {
+    return { heroX: this.hero.x, heroY: this.hero.y };
   }
   addTextures(assets: Record<string, any>) {
     this.assets = assets;
@@ -40,6 +57,7 @@ export class Hero extends Container {
     this.hero = Sprite.from("hero/planeRed1.png");
     this.hero.anchor.set(1, 0.5);
     this.hero.position.set(x, y);
+    this.addSmoke(x, y);
     this.addChild(this.hero);
   }
   startAnimation() {
