@@ -1,4 +1,4 @@
-import { Container, Rectangle, Sprite, Ticker } from "pixi.js";
+import { Container, Rectangle, Sprite, Texture, Ticker } from "pixi.js";
 import { EnemyBullet } from "./EnemyBullet";
 import { App } from "../System/App";
 import { Hero } from "./Hero";
@@ -8,10 +8,17 @@ export class Enemy extends Container {
   private speed: number;
   private enemyHitbox: Rectangle; // Custom hitbox for collision detection
   private score: number;
+  private explosionTextures: Texture[];
 
   constructor() {
     super();
     this.speed = 5; // Adjust the speed as needed
+    this.explosionTextures = [
+      Texture.from("explosion/ex1.png"),
+      Texture.from("explosion/ex2.png"),
+      Texture.from("explosion/ex3.png"),
+      Texture.from("explosion/ex4.png"),
+    ];
     Ticker.shared.add(this.update, this);
     Ticker.shared.add(this.checkForEnemyHit, this);
   }
@@ -46,19 +53,6 @@ export class Enemy extends Container {
 
     this.addChild(bullet);
   }
-  // bulletUpdate() {
-  //   // Move the enemy horizontally
-  //   this.bullet.x -= this.speed + 2;
-  //   this.bullet.y -= this.speed - 2;
-
-  //   // Check if the enemy has moved outside the left edge of the screen
-  //   if (this.bullet.x < -1000 || this.bullet.y < -1000) {
-  //     this.removeChild(this.enemy);
-  //     this.removeChild(this.bullet);
-  //     Ticker.shared.remove(this.update, this);
-  //     Ticker.shared.remove(this.bulletUpdate, this);
-  //   }
-  // }
 
   checkForEnemyHit() {
     const app = App.app;
@@ -80,11 +74,26 @@ export class Enemy extends Container {
     });
   }
   enemyDestroy() {
+    //Add explosion
+    const explosion = new Sprite(this.explosionTextures[0]);
+    explosion.anchor.set(0.5);
+    explosion.position.set(this.enemy.x, this.enemy.y);
+    this.addChild(explosion);
+    //Explosion animation effect
+    let frameIndex = 0;
+    const explosionInterval = setInterval(() => {
+      frameIndex++;
+      if (frameIndex < this.explosionTextures.length) {
+        explosion.texture = this.explosionTextures[frameIndex];
+      } else {
+        clearInterval(explosionInterval);
+        this.removeChild(explosion);
+      }
+    }, 100);
     this.score = parseInt(localStorage.getItem("gameScore") || "0");
     this.score += 10;
     Ticker.shared.remove(this.checkForEnemyHit, this);
     localStorage.setItem("gameScore", this.score.toString());
-    console.log("ENEMY HIT WITH BOMB");
     this.removeChild(this.enemy);
   }
 }
