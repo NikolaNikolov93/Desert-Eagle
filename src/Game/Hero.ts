@@ -43,7 +43,12 @@ export class Hero extends Container {
     let heroPosition = this.getHeroPosition();
     this.smoke.x = heroPosition.heroX - 75;
     this.smoke.y = heroPosition.heroY + 10;
-    console.log(this.smoke.x);
+    if (Ticker.shared.lastTime % 250 < 150) {
+      // Change 500 and 250 for blinking frequency
+      this.smoke.visible = true;
+    } else {
+      this.smoke.visible = false;
+    }
   }
   getHeroPosition() {
     return { heroX: this.hero.x, heroY: this.hero.y };
